@@ -26,7 +26,7 @@ int	check(char c, char *charset)
 	return (0);
 }
 
-int	count_substrings(char *str, char *charset)
+int	count_str(char *str, char *charset)
 {
 	int	i;
 	int	count;
@@ -47,7 +47,7 @@ int	count_substrings(char *str, char *charset)
 	return (count);
 }
 
-char	*copy_substring(char *str, int start, int len)
+char	*copy_str(char *str, int start, int len)
 {
 	char	*sub;
 	int		k;
@@ -72,9 +72,7 @@ char	**ft_split(char *str, char *charset)
 	int		j;
 	int		len;
 
-	result = (char **)malloc(sizeof(char *) * (count_substrings(str, charset) + 1));
-	if (!result)
-		return (NULL);
+	result = (char **)malloc(sizeof(char *) * (count_str(str, charset) + 1));
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -86,15 +84,14 @@ char	**ft_split(char *str, char *charset)
 			len = 0;
 			while (str[i + len] && !check(str[i + len], charset))
 				len++;
-			result[j] = copy_substring(str, i, len);
+			result[j] = copy_str(str, i, len);
 			if (!result[j])
 				return (NULL);
 			j++;
 			i += len;
 		}
 	}
-	result[j] = NULL;
-	return (result);
+	return (result[j] = NULL, result);
 }
 
 /*int	main(void)
